@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, FieldErrors } from "react-hook-form";
 import { DevTool } from '@hookform/devtools'
 import { useEffect } from "react";
 
@@ -38,7 +38,9 @@ export const YouTubeForm = () => {
 
   // console.log(form);
   const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
-  const { errors } = formState
+  const { errors, isDirty, isValid, isSubmitting, isSubmitted,isSubmitSuccessful, submitCount } = formState
+
+  console.log("FormState",isSubmitting, isSubmitted, isSubmitSuccessful,submitCount)
   useEffect(() => {
     const subscription = watch((value) => {
       console.log(value)
@@ -55,6 +57,10 @@ export const YouTubeForm = () => {
     console.log("Get values", getValues());
     console.log("Get values of Phone Number", getValues("phoneNumbers"));
     console.log("Get values of age and email ", getValues(["age", "email"]))
+  }
+
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log("on OnError Function", errors)
   }
 
   const handleSetvalue = () => {
@@ -76,7 +82,7 @@ export const YouTubeForm = () => {
     <div>
       <h1>YouTube Form  {renderCount / 2}</h1>
       {/* <h2>Watched value: {watchUsername}</h2> */}
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit,onError)} noValidate>
         <div className="form-control">
           <label htmlFor="username">Username</label>
           <input type="text" id="username" {...register("username", {
@@ -119,7 +125,10 @@ export const YouTubeForm = () => {
 
         <div className="form-control">
           <label htmlFor="twitter">Twitter</label>
-          <input type="text" id="twitter" {...register("social.twitter")} />
+          <input type="text" id="twitter" {...register("social.twitter", {
+            disabled: watch("channel") === "",
+            required:"Enter Twitter Profile"
+          })} />
         </div>
 
         <div className="form-control">
@@ -177,7 +186,7 @@ export const YouTubeForm = () => {
           })} />
           <p className="error">{errors.dob?.message}</p>
         </div>
-        <button>Submit</button>
+        <button disabled={!isDirty || !isValid}>Submit</button>
         <button type="button" onClick={handleGetvalues}>Get Values</button>
         <button type="button" onClick={handleSetvalue}>Set Values</button>
       </form>
