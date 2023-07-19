@@ -116,7 +116,7 @@ export const YouTubeForm = () => {
               },
               emailAvailable: async (fieldValue) => {
                 const response = await fetch(`https://jsonplaceholder.typicode.com/users?=${fieldValue}`);
-                const data = response.json();
+                const data = await response.json();
                 return data.length == 0 || "Email Already Exists"
               }
             }
