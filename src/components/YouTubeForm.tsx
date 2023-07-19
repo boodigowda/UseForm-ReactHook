@@ -37,10 +37,10 @@ export const YouTubeForm = () => {
   });
 
   // console.log(form);
-  const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
-  const { errors, isDirty, isValid, isSubmitting, isSubmitted,isSubmitSuccessful, submitCount } = formState
+  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset } = form;
+  const { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount } = formState
 
-  console.log("FormState",isSubmitting, isSubmitted, isSubmitSuccessful,submitCount)
+  console.log("FormState", isSubmitting, isSubmitted, isSubmitSuccessful, submitCount)
   useEffect(() => {
     const subscription = watch((value) => {
       console.log(value)
@@ -69,7 +69,7 @@ export const YouTubeForm = () => {
       shouldDirty: true,
       shouldTouch: true
     })
-  } 
+  }
   renderCount++
   // const { name, ref, onChange, onBlur } = register("username");
   const { fields, append, remove } = useFieldArray({
@@ -82,7 +82,7 @@ export const YouTubeForm = () => {
     <div>
       <h1>YouTube Form  {renderCount / 2}</h1>
       {/* <h2>Watched value: {watchUsername}</h2> */}
-      <form onSubmit={handleSubmit(onSubmit,onError)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <div className="form-control">
           <label htmlFor="username">Username</label>
           <input type="text" id="username" {...register("username", {
@@ -127,7 +127,7 @@ export const YouTubeForm = () => {
           <label htmlFor="twitter">Twitter</label>
           <input type="text" id="twitter" {...register("social.twitter", {
             disabled: watch("channel") === "",
-            required:"Enter Twitter Profile"
+            required: "Enter Twitter Profile"
           })} />
         </div>
 
@@ -189,6 +189,7 @@ export const YouTubeForm = () => {
         <button disabled={!isDirty || !isValid}>Submit</button>
         <button type="button" onClick={handleGetvalues}>Get Values</button>
         <button type="button" onClick={handleSetvalue}>Set Values</button>
+        <button type="button" onClick={() => reset()}>Reset</button>
       </form>
       <DevTool control={control} />
     </div>
