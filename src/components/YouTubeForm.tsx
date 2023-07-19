@@ -53,6 +53,12 @@ export const YouTubeForm = () => {
     console.log("form submmitted", data);
   }
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset])
+
   const handleGetvalues = () => {
     console.log("Get values", getValues());
     console.log("Get values of Phone Number", getValues("phoneNumbers"));
@@ -107,6 +113,11 @@ export const YouTubeForm = () => {
               },
               notBlockListed: (fieldValue) => {
                 return !fieldValue.endsWith("gl.com") || "This domain not supported"
+              },
+              emailAvailable: async (fieldValue) => {
+                const response = await fetch(`https://jsonplaceholder.typicode.com/users?=${fieldValue}`);
+                const data = response.json();
+                return data.length == 0 || "Email Already Exists"
               }
             }
           })} />
@@ -186,7 +197,7 @@ export const YouTubeForm = () => {
           })} />
           <p className="error">{errors.dob?.message}</p>
         </div>
-        <button disabled={!isDirty || !isValid}>Submit</button>
+        <button disabled={!isDirty || isSubmitting}>Submit</button>
         <button type="button" onClick={handleGetvalues}>Get Values</button>
         <button type="button" onClick={handleSetvalue}>Set Values</button>
         <button type="button" onClick={() => reset()}>Reset</button>
