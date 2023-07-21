@@ -1,5 +1,6 @@
 import './App.css';
-import {YouTubeForm} from './components/YouTubeForm';
+import { YouTubeForm } from './components/YouTubeForm';
+import YupYouTubeForm from './components/YupYouTubeForm';
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p> */}
-      <YouTubeForm/>
+      {/* <YouTubeForm/> */}
+      <YupYouTubeForm />
     </>
   )
 }

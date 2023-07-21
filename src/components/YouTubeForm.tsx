@@ -39,7 +39,7 @@ export const YouTubeForm = () => {
 
   // console.log(form);
   const { register, control, handleSubmit, formState, watch, getValues, setValue, reset, trigger } = form;
-  const { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount } = formState
+  const { errors, isDirty, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount } = formState
 
   console.log("FormState", isSubmitting, isSubmitted, isSubmitSuccessful, submitCount)
   useEffect(() => {
