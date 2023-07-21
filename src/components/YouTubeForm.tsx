@@ -34,11 +34,11 @@ export const YouTubeForm = () => {
       age: 0,
       dob: new Date
     },
-    mode: "all", //mode can be onSubmit,onChange,OnBlur
+    mode: "onSubmit", //mode can be onSubmit,onChange,OnBlur
   });
 
   // console.log(form);
-  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset } = form;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset, trigger } = form;
   const { errors, isDirty, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount } = formState
 
   console.log("FormState", isSubmitting, isSubmitted, isSubmitSuccessful, submitCount)
@@ -115,11 +115,11 @@ export const YouTubeForm = () => {
               notBlockListed: (fieldValue) => {
                 return !fieldValue.endsWith("gl.com") || "This domain not supported"
               },
-              emailAvailable: async (fieldValue) => {
-                const response = await fetch(`https://jsonplaceholder.typicode.com/users?=${fieldValue}`);
-                const data = await response.json();
-                return data.length == 0 || "Email Already Exists"
-              }
+              // emailAvailable: async (fieldValue) => {
+              //   const response = await fetch(`https://jsonplaceholder.typicode.com/users?=${fieldValue}`);
+              //   const data = await response.json();
+              //   return data.length == 0 || "Email Already Exists"
+              // }
             }
           })} />
           <p className="error">{errors.email?.message}</p>
@@ -202,6 +202,8 @@ export const YouTubeForm = () => {
         <button type="button" onClick={handleGetvalues}>Get Values</button>
         <button type="button" onClick={handleSetvalue}>Set Values</button>
         <button type="button" onClick={() => reset()}>Reset</button>
+        <button type="button" onClick={() => trigger()}>Validate</button>
+        {/* <button type="button" onClick={() => trigger("channel")}>Validate channel</button> */}
       </form>
       <DevTool control={control} />
     </div>
