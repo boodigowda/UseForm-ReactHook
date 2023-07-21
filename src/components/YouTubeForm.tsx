@@ -33,7 +33,8 @@ export const YouTubeForm = () => {
       phNumbers: [{ number: "" }],
       age: 0,
       dob: new Date
-    }
+    },
+    mode: "all", //mode can be onSubmit,onChange,OnBlur
   });
 
   // console.log(form);
